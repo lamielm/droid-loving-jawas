@@ -24,7 +24,7 @@ from droids import (
 class UserInterface:
     """Do I/O with the user"""
 
-    MAX_MENU_CHOICES = 3
+    MAX_MENU_CHOICES = 5
 
     def __init__(self, droid_collection):
         """Constructor"""
@@ -40,7 +40,9 @@ class UserInterface:
         print_info("What would you like to do?")
         print("1. Add a new droid to the system")
         print("2. Print the list of droids out")
-        print("3. Exit the program")
+        print("3. Sort Droids by Droid Model")
+        print("4. Sort Droids by total cost (least $ to most $$$)")
+        print("5. Exit the program")
         print()
 
     def display_exit_message(self):
@@ -204,6 +206,7 @@ class UserInterface:
         print_info(f"Does the droid have a {fieldname}? (y/n)")
         self._display_prompt()
         valid = False
+        value = ""
         while not valid:
             user_input = input()
             if user_input.lower() == "y" or user_input.lower() == "n":
@@ -214,7 +217,6 @@ class UserInterface:
                 print()
                 print_info(f"Does the droid have a {fieldname}? (y/n)")
                 self._display_prompt()
-
         return value
 
     def _display_prompt(self):
