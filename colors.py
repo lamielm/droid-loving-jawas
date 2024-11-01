@@ -1,8 +1,8 @@
 """Console Color Helpers"""
 
-# David Barnes
+# Landon Lamie
 # CIS 226
-# 05-28-23
+# 11/1/24
 
 # System imports
 import os

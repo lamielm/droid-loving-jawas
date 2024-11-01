@@ -1,8 +1,8 @@
 """User Interface Module"""
 
-# David Barnes
+# Landon Lamie
 # CIS 226
-# 6-4-2023
+# 11/1/24
 
 # First-party imports
 from colors import (

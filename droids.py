@@ -1,8 +1,8 @@
 """Droid classes"""
 
-# David Barnes
+# Landon Lamie
 # CIS 226
-# 6-4-2023
+# 11/1/24
 
 # System Imports
 import os
@@ -10,6 +10,8 @@ from abc import ABC, abstractmethod
 
 # First-party Imports
 from abstract_droid import AbstractDroid
+from datastructures import Queue, Stack
+from mergesort import MergeSort
 
 
 class Droid(AbstractDroid, ABC):
@@ -24,6 +26,11 @@ class Droid(AbstractDroid, ABC):
         super().__init__(*args, **kwargs)
         self._material = material
         self._color = color
+    # Sort droids by comparing their total cost values
+    def __lt__(self, other):
+        return self.total_cost < other.total_cost
+    def __gt__(self, other):
+        return self.total_cost > other.total_cost
 
     def __str__(self):
         """String method"""
@@ -322,6 +329,81 @@ class DroidCollection:
                 number_of_ships,
             )
         )
+
+    ##############################################
+    # Adding stack and queue to DroidCollection  #
+    ##############################################
+
+    def sort_droids_type(self):
+        """Take in droid collection, sort by droid type, return sorted collection"""
+        # Instances of each type of droid type
+        astro_stack = Stack()
+        janitor_stack = Stack()
+        utility_stack = Stack()
+        protocol_stack = Stack()
+        
+        # A queue used to store droids sorted by type
+        queue_droids = Queue()
+        
+        # May not be necessary, but I felt like making a copy of the collection would preserve original collection
+        initial_collection = self._collection
+
+        for droid in initial_collection:
+            if isinstance(droid, AstromechDroid):
+                astro_stack.push(droid)
+            elif isinstance(droid, JanitorDroid):
+                janitor_stack.push(droid)
+            elif isinstance(droid, ProtocolDroid):
+                protocol_stack.push(droid)
+            else:
+                # To avoid the jan and proto being added to the utility stack, the utility droids have to be done last to add the non-specific droids.
+                utility_stack.push(droid)
+
+        while not astro_stack.is_empty:
+            # Take the droid off of the front of the astro stack
+            droid = astro_stack.pop()
+            # Add this droid to the back of the queue of droids
+            queue_droids.enqueue(droid)
+        
+        while not janitor_stack.is_empty:
+            # Take the droid off of the front of the janitor stack
+            droid = janitor_stack.pop()
+            # Add this droid to the back of the queue of droids
+            queue_droids.enqueue(droid)
+        
+        while not utility_stack.is_empty:
+            # Take the droid off of the front of the utility stack
+            droid = utility_stack.pop()
+            # Add this droid to the back of the queue of droids
+            queue_droids.enqueue(droid)
+        
+        while not protocol_stack.is_empty:
+            # Take the droid off of the front of the protocol stack
+            droid = protocol_stack.pop()
+            # Add this droid to the back of the queue of droids
+            queue_droids.enqueue(droid)
+
+        # Clear the current droid collection before adding the sorted droids to it again
+        self._collection.clear()
+
+        # Make sure queue droid is not empty
+        while not queue_droids.is_empty:
+            # Remove droid from the front of the queue and add it to the droid collection list.
+            droid = queue_droids.dequeue()
+            self._collection.append(droid)
+
+    ##############################################
+    # Sorting droid collection by total cost     #
+    ##############################################  
+
+    def sort_by_total_cost(self):
+        """Use mergesort to sort droids by total cost"""
+        # Create instance of mergesort
+        mergesort = MergeSort()
+
+        # Send the droid collection through the sort method of the mergeshort class to have droids sorted by total cost.
+        mergesort.sort(self._collection)
+
 
     def is_empty(self):
         """Whether the collection is empty or not"""

@@ -107,7 +107,10 @@ Be sure to think about what the time complexity for the bucket sort will be. Thi
 
 ## Outside Resources Used
 
-
+cis226-inclass-4-key used to import:
+	LinkedList data structures
+[mergesort demonstration](https://barnesbrothers.net/cis226/recursion-visualizations-python)
+	Used for the mergesort file and classes.
 
 ## Known Problems, Issues, And/Or Errors in the Program
 
